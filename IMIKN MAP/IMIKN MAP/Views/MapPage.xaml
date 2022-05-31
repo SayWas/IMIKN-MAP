@@ -16,10 +16,23 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
-        <controls:Map Source="Map" Floors="1" HorizontalOptions="Fill" VerticalOptions="Fill"/>
-        <StackLayout HorizontalOptions="End" VerticalOptions="Center" Orientation="Vertical" Margin="10">
-            <controls:SvgImage Source="Me.svg" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <controls:SvgImage Source="Me.svg" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <controls:Map Source="Map" Floors="1" ScaleValue="{Binding ScaleValue}" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+        <controls:SvgImage Source="threeline.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Start" Margin="7, 7">
+            <controls:SvgImage.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OpenFlyoutCommand}"/>
+            </controls:SvgImage.GestureRecognizers>
+        </controls:SvgImage>
+        <StackLayout HorizontalOptions="End" VerticalOptions="Start" Orientation="Vertical" Margin="0, 150, 10, 0">
+            <controls:SvgImage Source="plus.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Margin="0, 5">
+                <controls:SvgImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ScaleUpCommand}"/>
+                </controls:SvgImage.GestureRecognizers>
+            </controls:SvgImage>
+            <controls:SvgImage Source="minus.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center">
+                <controls:SvgImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ScaleDownCommand}"/>
+                </controls:SvgImage.GestureRecognizers>
+            </controls:SvgImage>
         </StackLayout>
     </Grid>
     <!--<controls:SvgImage Source="test.svg" WidthRequest="300" HeightRequest="300" HorizontalOptions="Center" VerticalOptions="Center" /> -->

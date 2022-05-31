@@ -6,14 +6,42 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\1_floor.svg" />
+    <None Remove="Resources\1_floor_glow.svg" />
+    <None Remove="Resources\2_floor.svg" />
+    <None Remove="Resources\2_floor_glow.svg" />
+    <None Remove="Resources\3_floor.svg" />
+    <None Remove="Resources\3_floor_glow.svg" />
+    <None Remove="Resources\4_floor.svg" />
+    <None Remove="Resources\4_floor_glow.svg" />
+    <None Remove="Resources\a.svg" />
+    <None Remove="Resources\b.svg" />
+    <None Remove="Resources\Center.svg" />
     <None Remove="Resources\Map\Floor1 - Копировать.svg" />
     <None Remove="Resources\Me.svg" />
+    <None Remove="Resources\minus.svg" />
+    <None Remove="Resources\plus.svg" />
+    <None Remove="Resources\threeline.svg" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\1_floor.svg" />
+    <EmbeddedResource Include="Resources\1_floor_glow.svg" />
+    <EmbeddedResource Include="Resources\2_floor.svg" />
+    <EmbeddedResource Include="Resources\2_floor_glow.svg" />
+    <EmbeddedResource Include="Resources\3_floor.svg" />
+    <EmbeddedResource Include="Resources\3_floor_glow.svg" />
+    <EmbeddedResource Include="Resources\4_floor.svg" />
+    <EmbeddedResource Include="Resources\4_floor_glow.svg" />
+    <EmbeddedResource Include="Resources\a.svg" />
+    <EmbeddedResource Include="Resources\b.svg" />
+    <EmbeddedResource Include="Resources\Center.svg" />
+    <EmbeddedResource Include="Resources\minus.svg" />
+    <EmbeddedResource Include="Resources\plus.svg" />
     <EmbeddedResource Include="Resources\test.svg" />
     <EmbeddedResource Include="Resources\Me.svg" />
     <EmbeddedResource Include="Resources\Map\Floor1.svg" />
+    <EmbeddedResource Include="Resources\threeline.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +60,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Views\FlyoutHeaderView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\MapPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

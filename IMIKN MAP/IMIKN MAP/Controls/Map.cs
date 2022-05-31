@@ -22,6 +22,8 @@ namespace IMIKN_MAP.Controls
             nameof(Source), typeof(string), typeof(SvgImage), default(string), propertyChanged: SourceChanged);
         public static readonly BindableProperty FloorsProperty = BindableProperty.Create(
             nameof(Floors), typeof(int), typeof(Map), default(int), propertyChanged: FloorsChanged);
+        public static readonly BindableProperty ScaleValueProperty = BindableProperty.Create(
+            nameof(ScaleValue), typeof(double), typeof(Map), default(double), propertyChanged: ScaleValueChanged);
 
         public string Source
         {
@@ -37,6 +39,11 @@ namespace IMIKN_MAP.Controls
         {
             get { return current_floor; }
             set { current_floor = value; }
+        }
+        public double ScaleValue
+        {
+            get => (double)GetValue(ScaleValueProperty);
+            set => SetValue(ScaleValueProperty, value);
         }
 
         public Map()
@@ -73,6 +80,16 @@ namespace IMIKN_MAP.Controls
 
             map?.LoadSvgPicture();
             map?._canvasView.InvalidateSurface();
+        }
+        private static void ScaleValueChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            Map map = bindable as Map;
+            if (map._svgPictures == null || map.ScaleValue == 0)
+                return;
+            map.OnPinchUpdated(map, new PinchGestureUpdatedEventArgs(GestureStatus.Started,(double)newValue, new Point(0.5, 0.5)));
+            map.OnPinchUpdated(map, new PinchGestureUpdatedEventArgs(GestureStatus.Running, (double)newValue, new Point(0.5, 0.5)));
+            map.OnPinchUpdated(map, new PinchGestureUpdatedEventArgs(GestureStatus.Completed, (double)newValue, new Point(0.5, 0.5)));
+            map.gestureParameters.WasScaled = false;
         }
         private void LoadSvgPicture()
         {
@@ -122,7 +139,7 @@ namespace IMIKN_MAP.Controls
             canvas.DrawPicture(_svgPictures[currentFloor]);
         }
 
-        void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
+        private void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
         {
             switch (e.Status)
             {
@@ -167,7 +184,7 @@ namespace IMIKN_MAP.Controls
                     break;
             }
         }
-        void OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
             switch (e.StatusType)
             {
@@ -179,7 +196,6 @@ namespace IMIKN_MAP.Controls
                     gestureParameters.TranslationMove[1] = gestureParameters.Coordinates[1] + (e.TotalY * 2.2);
                     gestureParameters.TranslationMove[0] = gestureParameters.TranslationMove[0].Clamp(-(gestureParameters.Size[0] * gestureParameters.Scale - Math.Abs(gestureParameters.Offset[0]) - gestureParameters.Size[0]), Math.Abs(gestureParameters.Offset[0]));
                     gestureParameters.TranslationMove[1] = gestureParameters.TranslationMove[1].Clamp(-(gestureParameters.Size[1] * gestureParameters.Scale - Math.Abs(gestureParameters.Offset[1]) - gestureParameters.Size[1]), Math.Abs(gestureParameters.Offset[1]));
-
                     _canvasView.InvalidateSurface();
                     break;
 
