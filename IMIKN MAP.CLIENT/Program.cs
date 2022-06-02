@@ -11,7 +11,8 @@ namespace IMIKN_MAP.CLIENT
             WebClient client = new WebClient();
             string downloadString = client.DownloadString("http://localhost:19787/files/events.json");
             var events = JArray.Parse(downloadString);
-            Console.WriteLine(events);
+            string[] arr = events[0]["name"].ToObject<string[]>();
+            Console.WriteLine((string)events[1]["name"] + " | " + events[1]["room"]);
         }
     }
 }

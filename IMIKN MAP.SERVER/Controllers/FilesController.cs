@@ -23,7 +23,7 @@ namespace IMIKN_MAP.SERVER.Controllers
             Event[] events = new Event[5];
             for (int i = 0; i < 5; i++)
             {
-                events[i] = new Event("1", "2022-05-14T08:30:00", "2022-05-14T08:30:00", "УЛК-05", i);
+                events[i] = new Event(new string[2] {"qwfqw", "fqfwq"}, "2022-05-14T08:30:00", "2022-05-14T08:30:00", "УЛК-05", i);
             }
             return events;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMIKN_MAP.Models;
+using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using SkiaSharp;
@@ -16,6 +17,7 @@ namespace IMIKN_MAP.Controls
 
         private readonly SKCanvasView _canvasView = new SKCanvasView();
         private SKPicture[] _svgPictures;
+        private SKPoint[][] pathpoints;
         private int current_floor;
 
         public static readonly BindableProperty SourceProperty = BindableProperty.Create(
@@ -24,6 +26,10 @@ namespace IMIKN_MAP.Controls
             nameof(Floors), typeof(int), typeof(Map), default(int), propertyChanged: FloorsChanged);
         public static readonly BindableProperty ScaleValueProperty = BindableProperty.Create(
             nameof(ScaleValue), typeof(double), typeof(Map), default(double), propertyChanged: ScaleValueChanged);
+        public static readonly BindableProperty PathPointsProperty = BindableProperty.Create(
+            nameof(PathPoints), typeof(Dot[]), typeof(Map), null, propertyChanged: PathChanged);
+        public static readonly BindableProperty TargetProperty = BindableProperty.Create(
+            nameof(Target), typeof(double[]), typeof(Map), null, propertyChanged: TargetChanged);
 
         public string Source
         {
@@ -44,6 +50,16 @@ namespace IMIKN_MAP.Controls
         {
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
+        }
+        public Dot[] PathPoints
+        {
+            get => (Dot[])GetValue(PathPointsProperty);
+            set => SetValue(PathPointsProperty, value);
+        }
+        public double[] Target
+        {
+            get => (double[])GetValue(TargetProperty);
+            set => SetValue(TargetProperty, value);
         }
 
         public Map()
@@ -91,6 +107,16 @@ namespace IMIKN_MAP.Controls
             map.OnPinchUpdated(map, new PinchGestureUpdatedEventArgs(GestureStatus.Completed, (double)newValue, new Point(0.5, 0.5)));
             map.gestureParameters.WasScaled = false;
         }
+        private static void PathChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            //Map map = bindable as Map;
+
+            //map?._canvasView.InvalidateSurface();
+        }
+        private static void TargetChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+
+        }
         private void LoadSvgPicture()
         {
             if (_svgPictures == null)
@@ -116,27 +142,39 @@ namespace IMIKN_MAP.Controls
 
             if (string.IsNullOrEmpty(Source))
                 return;
-
             if (_svgPictures == null)
                 return;
 
             int currentFloor = CurrentFloor - 1;
             SKImageInfo info = args.Info;
             canvas.Translate(info.Width / 2f, info.Height / 2f);
-
             SKRect bounds = _svgPictures[currentFloor].CullRect;
-
             float ratio = info.Height - bounds.Height < info.Width - bounds.Width
                 ? info.Height / bounds.Height
                 : info.Width / bounds.Width;
-
             canvas.Scale(ratio);
             canvas.Translate(-bounds.MidX, -bounds.MidY);
+
             canvas.Translate((float)gestureParameters.TranslationScale[0], (float)gestureParameters.TranslationScale[1]);
             canvas.Translate((float)gestureParameters.TranslationMove[0], (float)gestureParameters.TranslationMove[1]);
             canvas.Scale((float)gestureParameters.Scale);
 
             canvas.DrawPicture(_svgPictures[currentFloor]);
+
+            /*if (Pathpoints[CurrentFloor] != null)
+                canvas.DrawPoints(SKPointMode.Lines, pathpoints[CurrentFloor], new SKPaint
+                {
+                    Style = SKPaintStyle.Stroke,
+                    Color = SKColors.Orange,
+                    StrokeWidth = 50
+                });
+            if (Target != null && CurrentFloor == Target[2])
+                canvas.DrawCircle((float)Target[0], (float)Target[1], 15, new SKPaint
+                {
+                    Style = SKPaintStyle.Stroke,
+                    Color = SKColors.Red,
+                    StrokeWidth = 50
+                });*/
         }
 
         private void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)

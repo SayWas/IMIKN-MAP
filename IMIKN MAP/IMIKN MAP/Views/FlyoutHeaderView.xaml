@@ -7,26 +7,11 @@
              x:Class="IMIKN_MAP.Views.FlyoutHeaderView">
 
     <ContentView.Content>
-        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Orientation="Vertical">
+
+            <Label Opacity="0.7" Text="Этаж" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0, 10, 0, 0"/>
             
-            <StackLayout HorizontalOptions="Fill" VerticalOptions="Start" Orientation="Horizontal" Margin="5">
-                <Label Text="Владислав Владимирович" Margin="5" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Button Text="Log out"  HorizontalOptions="EndAndExpand" VerticalOptions="Center" BackgroundColor="White" TextColor="Red"/>
-            </StackLayout>
-            
-            <StackLayout>
-                <Grid HorizontalOptions="Fill" VerticalOptions="Start">
-                    <SearchBar Placeholder="Choose strat location..." HorizontalOptions="Fill" VerticalOptions="Center"/>
-                    <controls:SvgImage Source="a.svg" WidthRequest="35" HeightRequest="35" HorizontalOptions="Start" VerticalOptions="Center" Margin="10, 15, 0, 10"/>
-                </Grid>
-                <Grid HorizontalOptions="Fill" VerticalOptions="Start">
-                    <SearchBar Placeholder="Choose destination..." HorizontalOptions="Fill" VerticalOptions="Center"/>
-                    <controls:SvgImage Source="b.svg" WidthRequest="35" HeightRequest="35" HorizontalOptions="Start" VerticalOptions="Center" Margin="10, 15, 0, 10"/>
-                </Grid>
-                <Button Text="Построить маршрут" HorizontalOptions="Fill" VerticalOptions="Center" BackgroundColor="White" HeightRequest="40"/>
-            </StackLayout>
-            <Label Opacity="0.6" Text="Этаж" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="10" WidthRequest="10"/>
-            <StackLayout HorizontalOptions="Fill" VerticalOptions="End" Orientation="Horizontal" Margin="0, 0, 0, 5">
+            <StackLayout HorizontalOptions="Fill" VerticalOptions="End" Orientation="Horizontal" Margin="0, 0, 0, 10">
                 <controls:SvgImage Source="1_floor.svg" WidthRequest="45" HeightRequest="45" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
                 <controls:SvgImage Source="2_floor.svg" WidthRequest="45" HeightRequest="45" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
                 <controls:SvgImage Source="3_floor.svg" WidthRequest="45" HeightRequest="45" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>

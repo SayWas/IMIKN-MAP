@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct ="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="IMIKN_MAP.Views.PathSelectionPage"
+             xmlns:vm="clr-namespace:IMIKN_MAP.ViewModels"  
+             xmlns:model="clr-namespace:IMIKN_MAP.Models"  
+             xmlns:controls="clr-namespace:IMIKN_MAP.Controls"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:PathSelectionViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+        <Grid HorizontalOptions="Fill" VerticalOptions="Center">
+                <SearchBar x:Name="StartSearchBar" Placeholder="Текущее местоположение" HorizontalOptions="Fill" VerticalOptions="Center" Text="{Binding StartSearchBarText}">
+                    <SearchBar.Behaviors>
+                        <xct:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding TextChangedCommand}"
+                            CommandParameter="{x:Reference StartSearchBar}"/>
+                        <xct:EventToCommandBehavior
+                            EventName="Focused"
+                            Command="{Binding TextChangedCommand}"
+                            CommandParameter="{x:Reference StartSearchBar}"/>
+                    </SearchBar.Behaviors>
+                </SearchBar>
+                    <controls:SvgImage Source="a.svg" WidthRequest="55" HeightRequest="55" HorizontalOptions="Start" VerticalOptions="Center" Margin="2, 15, 0, 10"/>
+        </Grid>
+        <Grid HorizontalOptions="Fill" VerticalOptions="Center">
+                <SearchBar x:Name="DestinationSearchBar" Placeholder="Choose destination..." HorizontalOptions="Fill" VerticalOptions="Center" Text="{Binding DestinationSearchBarText}">
+                    <SearchBar.Behaviors>
+                        <xct:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding TextChangedCommand}"
+                            CommandParameter="{x:Reference DestinationSearchBar}"/>
+                        <xct:EventToCommandBehavior
+                            EventName="Focused"
+                            Command="{Binding TextChangedCommand}"
+                            CommandParameter="{x:Reference DestinationSearchBar}"/>
+                    </SearchBar.Behaviors>
+                </SearchBar>
+                <controls:SvgImage Source="b.svg" WidthRequest="55" HeightRequest="55" HorizontalOptions="Start" VerticalOptions="Center" Margin="2, 15, 0, 10"/>
+        </Grid>
+        <Button Text="Построить маршрут" Command="{Binding BuildPathCommand}" HorizontalOptions="Fill" VerticalOptions="Center" BackgroundColor="White" HeightRequest="40"/>
+    </StackLayout>
+    
+    <CollectionView x:Name="ItemsListView"
+                    ItemsSource="{Binding Dots}"
+                    SelectionMode="None"
+                    EmptyView="{Binding CollectionViewText}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout Padding="10" x:DataType="model:Dot">
+                        <Label Text="{Binding Id}" 
+                            LineBreakMode="NoWrap" 
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="16" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PathSelectionViewModel}}, Path=DotTapped}"		
+                                CommandParameter="{Binding .}">
+                        </TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+    </StackLayout>
+
+</ContentPage>

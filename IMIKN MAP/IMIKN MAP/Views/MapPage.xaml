@@ -16,24 +16,36 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
-        <controls:Map Source="Map" Floors="1" ScaleValue="{Binding ScaleValue}" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+        <controls:Map Source="Map" Floors="1" ScaleValue="{Binding ScaleValue}" PathPoints="{Binding NavigationDots}" Target="{Binding Target}" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+
         <controls:SvgImage Source="threeline.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Start" Margin="7, 7">
             <controls:SvgImage.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding OpenFlyoutCommand}"/>
             </controls:SvgImage.GestureRecognizers>
         </controls:SvgImage>
+        
         <StackLayout HorizontalOptions="End" VerticalOptions="Start" Orientation="Vertical" Margin="0, 150, 10, 0">
+            
             <controls:SvgImage Source="plus.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Margin="0, 5">
                 <controls:SvgImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ScaleUpCommand}"/>
                 </controls:SvgImage.GestureRecognizers>
             </controls:SvgImage>
+            
             <controls:SvgImage Source="minus.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center">
                 <controls:SvgImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ScaleDownCommand}"/>
                 </controls:SvgImage.GestureRecognizers>
             </controls:SvgImage>
+            
         </StackLayout>
+
+        <controls:SvgImage Source="threeline.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="End" VerticalOptions="End" Margin="7, 7">
+            <controls:SvgImage.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ChoosePathCommand}"/>
+            </controls:SvgImage.GestureRecognizers>
+        </controls:SvgImage>
+
     </Grid>
     <!--<controls:SvgImage Source="test.svg" WidthRequest="300" HeightRequest="300" HorizontalOptions="Center" VerticalOptions="Center" /> -->
         <!-- <Image x:Name="MainFoto" Source="etazh42.png" HeightRequest="500" WidthRequest="100" VerticalOptions="Center"/> -->

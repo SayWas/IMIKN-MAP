@@ -7,7 +7,7 @@ namespace IMIKN_MAP.SERVER
 {
     public class Event
     {
-        public Event(string name, string startsAtLocal, string endsAtLocal, string building, int room)
+        public Event(string[] name, string startsAtLocal, string endsAtLocal, string building, int room)
         {
             this.name = name;
             this.startsAtLocal = DateTime.Parse(startsAtLocal);
@@ -16,7 +16,7 @@ namespace IMIKN_MAP.SERVER
             this.room = room;
         }
 
-        public string name { get; set; }
+        public string[] name { get; set; }
 
         public DateTime startsAtLocal { get; set; }
 
