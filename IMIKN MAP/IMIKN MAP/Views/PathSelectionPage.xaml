@@ -27,7 +27,7 @@
                             CommandParameter="{x:Reference StartSearchBar}"/>
                     </SearchBar.Behaviors>
                 </SearchBar>
-                    <controls:SvgImage Source="a.svg" WidthRequest="55" HeightRequest="55" HorizontalOptions="Start" VerticalOptions="Center" Margin="2, 15, 0, 10"/>
+                    <controls:SvgImage Source="a" WidthRequest="65" HeightRequest="65" HorizontalOptions="Start" VerticalOptions="Center" Margin="-1, 15, 0, 10"/>
         </Grid>
         <Grid HorizontalOptions="Fill" VerticalOptions="Center">
                 <SearchBar x:Name="DestinationSearchBar" Placeholder="Choose destination..." HorizontalOptions="Fill" VerticalOptions="Center" Text="{Binding DestinationSearchBarText}">
@@ -42,7 +42,7 @@
                             CommandParameter="{x:Reference DestinationSearchBar}"/>
                     </SearchBar.Behaviors>
                 </SearchBar>
-                <controls:SvgImage Source="b.svg" WidthRequest="55" HeightRequest="55" HorizontalOptions="Start" VerticalOptions="Center" Margin="2, 15, 0, 10"/>
+                <controls:SvgImage Source="b" WidthRequest="65" HeightRequest="65" HorizontalOptions="Start" VerticalOptions="Center" Margin="-1, 15, 0, 10"/>
         </Grid>
         <Button Text="Построить маршрут" Command="{Binding BuildPathCommand}" HorizontalOptions="Fill" VerticalOptions="Center" BackgroundColor="White" HeightRequest="40"/>
     </StackLayout>

@@ -24,7 +24,6 @@ namespace IMIKN_MAP.ViewModels
         private string startSearchBarText;
         private string destinationSearchBarText;
 
-        private Graph Graph { get; set; }
         private Dot[] NavigationDots { get; set; }
         private bool IsStartDot { get; set; }
         public string CollectionViewText { get => collectionViewText; set => SetProperty(ref collectionViewText, value); }
@@ -33,22 +32,14 @@ namespace IMIKN_MAP.ViewModels
 
         public PathSelectionViewModel()
         {
-            CollectionViewText = "Выберите место назначения";
             NavigationDots = new Dot[2];
             NavigationDots[0] = new Dot("Мое местоположение", 0, 0, 0, new string[1] {""});
             RawDots = new ObservableCollection<Dot>();
-            RawDots.Add(new Dot("qwrq", 1, 1, 1, new string[] {""}));
-            RawDots.Add(new Dot("qqef", 1, 1, 1, new string[] { "" }));
-            RawDots.Add(new Dot("qwegq", 1, 1, 1, new string[] { "" }));
-            RawDots.Add(new Dot("aaaq", 1, 1, 1, new string[] { "" }));
-            RawDots.Add(new Dot("wrhetjs", 1, 1, 1, new string[] { "" }));
-            RawDots.Add(new Dot("qberw", 1, 1, 1, new string[] { "" }));
-            RawDots.Add(new Dot("zvdsbg", 1, 1, 1, new string[] { "" }));
-            Dots = new ObservableCollection<Dot>();
+            LoadDots();
+            Dots = new ObservableCollection<Dot>(RawDots);
             TextChangedCommand = new Command<SearchBar>(TextChanged);
             DotTapped = new Command<Dot>(OnDotSelected);
             BuildPathCommand = new Command(BuildPath);
-            //LoadDots();
         }
 
         private void LoadDots()
@@ -57,10 +48,9 @@ namespace IMIKN_MAP.ViewModels
 
             try
             {
-                Dots.Clear();
                 var rawdots = JArray.Parse((string)App.Current.Properties["RawDots"]);
                 foreach (var dot in rawdots)
-                    RawDots.Add(new Dot((string)dot["Id"], (double)dot["X"], (double)dot["Y"], (int)dot["Floor"], dot["LinkedId"].ToObject<string[]>(), (bool)dot["IsStairs"]));
+                    RawDots.Add(new Dot((string)dot["Id"], (double)dot["X"], (double)dot["Y"], (int)dot["Floor"], dot["LinkedPoints"].ToObject<string[]>(), (bool)dot["IsStairs"]));
             }
             catch (Exception ex)
             {
@@ -97,7 +87,7 @@ namespace IMIKN_MAP.ViewModels
                 CollectionViewText = "Невозможно посторить маршрут";
                 return;
             }
-            //Dot[] path = Graph.GetPath(NavigationDots[0].Id, NavigationDots[1].Id);
+            MapViewModel.Current.PathIds = new string[2] {NavigationDots[0].Id, NavigationDots[1].Id};
             await Shell.Current.GoToAsync("..");
         }
 

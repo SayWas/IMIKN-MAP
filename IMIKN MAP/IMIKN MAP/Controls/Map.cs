@@ -8,17 +8,21 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using SKSvg = SkiaSharp.Extended.Svg.SKSvg;
+using IMIKN_MAP.Services;
+using System.Collections.Generic;
 
 namespace IMIKN_MAP.Controls
 {
     class Map : Frame
     {
+        static Map Current;
         private GestureParameters gestureParameters;
 
         private readonly SKCanvasView _canvasView = new SKCanvasView();
+
+        private Graph graph;
         private SKPicture[] _svgPictures;
-        private SKPoint[][] pathpoints;
-        private int current_floor;
+        private List<List<SKPoint[]>> pathpoints;
 
         public static readonly BindableProperty SourceProperty = BindableProperty.Create(
             nameof(Source), typeof(string), typeof(SvgImage), default(string), propertyChanged: SourceChanged);
@@ -26,10 +30,10 @@ namespace IMIKN_MAP.Controls
             nameof(Floors), typeof(int), typeof(Map), default(int), propertyChanged: FloorsChanged);
         public static readonly BindableProperty ScaleValueProperty = BindableProperty.Create(
             nameof(ScaleValue), typeof(double), typeof(Map), default(double), propertyChanged: ScaleValueChanged);
-        public static readonly BindableProperty PathPointsProperty = BindableProperty.Create(
-            nameof(PathPoints), typeof(Dot[]), typeof(Map), null, propertyChanged: PathChanged);
-        public static readonly BindableProperty TargetProperty = BindableProperty.Create(
-            nameof(Target), typeof(double[]), typeof(Map), null, propertyChanged: TargetChanged);
+        public static readonly BindableProperty PathIdsProperty = BindableProperty.Create(
+            nameof(PathIds), typeof(string[]), typeof(Map), null, propertyChanged: PathIdsChanged);
+        public static readonly BindableProperty CurrentFloorProperty = BindableProperty.Create(
+            nameof(CurrentFloor), typeof(int), typeof(Map), null, propertyChanged: CurrentFloorChanged);
 
         public string Source
         {
@@ -43,23 +47,18 @@ namespace IMIKN_MAP.Controls
         }
         public int CurrentFloor
         {
-            get { return current_floor; }
-            set { current_floor = value; }
+            get => (int)GetValue(CurrentFloorProperty);
+            set => SetValue(CurrentFloorProperty, value);
         }
         public double ScaleValue
         {
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
         }
-        public Dot[] PathPoints
+        public string[] PathIds
         {
-            get => (Dot[])GetValue(PathPointsProperty);
-            set => SetValue(PathPointsProperty, value);
-        }
-        public double[] Target
-        {
-            get => (double[])GetValue(TargetProperty);
-            set => SetValue(TargetProperty, value);
+            get => (string[])GetValue(PathIdsProperty);
+            set => SetValue(PathIdsProperty, value);
         }
 
         public Map()
@@ -76,6 +75,7 @@ namespace IMIKN_MAP.Controls
             var panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
             GestureRecognizers.Add(panGesture);
+            Current = this;
         }
 
         private static void FloorsChanged(BindableObject bindable, object oldValue, object newValue)
@@ -85,6 +85,9 @@ namespace IMIKN_MAP.Controls
             if (string.IsNullOrEmpty(map.Source))
                 return;
 
+            map.pathpoints = new List<List<SKPoint[]>>();
+            for (int i = 0; i < map.Floors; i++)
+                map.pathpoints.Add(new List<SKPoint[]>());
             map.LoadSvgPicture();
             map._canvasView.InvalidateSurface();
         }
@@ -107,15 +110,35 @@ namespace IMIKN_MAP.Controls
             map.OnPinchUpdated(map, new PinchGestureUpdatedEventArgs(GestureStatus.Completed, (double)newValue, new Point(0.5, 0.5)));
             map.gestureParameters.WasScaled = false;
         }
-        private static void PathChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void PathIdsChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            //Map map = bindable as Map;
+            Map map = bindable as Map;
+            foreach (var item in map.pathpoints)
+                item.Clear();
+            map.graph = new Graph((string)App.Current.Properties["Dots"]);
+            Dot[] path = map.graph.GetPath(map.PathIds[0], map.PathIds[1]);
+            int i = 1, j = 0;
+            for (; i < path.Length; i++)
+            {
+                while (path[i].Floor == path[i - 1].Floor && i < path.Length - 1)
+                    i++;
 
+                if (i == path.Length - 1) i++;
+
+                SKPoint[] points = new SKPoint[i - j];
+                for (int q = 0; q < i - j; q++)
+                {
+                    points[q] = new SKPoint((float)path[j + q].X, (float)path[j + q].Y);
+                }
+                map.pathpoints[path[i - 1].Floor - 1].Add(points);
+                j = i;
+            }
             //map?._canvasView.InvalidateSurface();
         }
-        private static void TargetChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void CurrentFloorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-
+            Map map = bindable as Map;
+            map._canvasView.InvalidateSurface();
         }
         private void LoadSvgPicture()
         {
@@ -140,35 +163,26 @@ namespace IMIKN_MAP.Controls
             SKCanvas canvas = args.Surface.Canvas;
             canvas.Clear();
 
-            if (string.IsNullOrEmpty(Source))
-                return;
-            if (_svgPictures == null)
-                return;
-
-            int currentFloor = CurrentFloor - 1;
             SKImageInfo info = args.Info;
             canvas.Translate(info.Width / 2f, info.Height / 2f);
-            SKRect bounds = _svgPictures[currentFloor].CullRect;
-            float ratio = info.Height - bounds.Height < info.Width - bounds.Width
-                ? info.Height / bounds.Height
-                : info.Width / bounds.Width;
+            SKRect bounds = _svgPictures[CurrentFloor - 1].CullRect;
+            float ratio = info.Height - bounds.Height < info.Width - bounds.Width ? info.Height / bounds.Height : info.Width / bounds.Width;
             canvas.Scale(ratio);
-            canvas.Translate(-bounds.MidX, -bounds.MidY);
 
-            canvas.Translate((float)gestureParameters.TranslationScale[0], (float)gestureParameters.TranslationScale[1]);
-            canvas.Translate((float)gestureParameters.TranslationMove[0], (float)gestureParameters.TranslationMove[1]);
+            canvas.Translate(-bounds.MidX + (float)gestureParameters.TranslationScale[0] + (float)gestureParameters.TranslationMove[0], -bounds.MidY + (float)gestureParameters.TranslationScale[1] + (float)gestureParameters.TranslationMove[1]);
             canvas.Scale((float)gestureParameters.Scale);
 
-            canvas.DrawPicture(_svgPictures[currentFloor]);
+            canvas.DrawPicture(_svgPictures[CurrentFloor - 1]);
 
-            /*if (Pathpoints[CurrentFloor] != null)
-                canvas.DrawPoints(SKPointMode.Lines, pathpoints[CurrentFloor], new SKPaint
-                {
-                    Style = SKPaintStyle.Stroke,
-                    Color = SKColors.Orange,
-                    StrokeWidth = 50
-                });
-            if (Target != null && CurrentFloor == Target[2])
+            if (pathpoints[CurrentFloor - 1].Count != 0)
+                foreach (var path in pathpoints[CurrentFloor - 1])
+                    canvas.DrawPoints(SKPointMode.Polygon, path, new SKPaint
+                    {
+                        Style = SKPaintStyle.Stroke,
+                        Color = SKColors.Orange,
+                        StrokeWidth = 3
+                    });
+            /*if (Target != null && CurrentFloor == Target[2])
                 canvas.DrawCircle((float)Target[0], (float)Target[1], 15, new SKPaint
                 {
                     Style = SKPaintStyle.Stroke,
@@ -188,7 +202,6 @@ namespace IMIKN_MAP.Controls
                     gestureParameters.TranslationMove[0] = 0;
                     gestureParameters.TranslationMove[1] = 0;
                     break;
-
                 case GestureStatus.Running:
                     gestureParameters.CurrentScale += (e.Scale - 1) * gestureParameters.StartScale;
                     gestureParameters.CurrentScale = Math.Max(1, gestureParameters.CurrentScale);
@@ -229,7 +242,7 @@ namespace IMIKN_MAP.Controls
                 case GestureStatus.Running:
                     if (gestureParameters.WasScaled)
                         break;
-
+                        
                     gestureParameters.TranslationMove[0] = gestureParameters.Coordinates[0] + (e.TotalX * 2.2);
                     gestureParameters.TranslationMove[1] = gestureParameters.Coordinates[1] + (e.TotalY * 2.2);
                     gestureParameters.TranslationMove[0] = gestureParameters.TranslationMove[0].Clamp(-(gestureParameters.Size[0] * gestureParameters.Scale - Math.Abs(gestureParameters.Offset[0]) - gestureParameters.Size[0]), Math.Abs(gestureParameters.Offset[0]));

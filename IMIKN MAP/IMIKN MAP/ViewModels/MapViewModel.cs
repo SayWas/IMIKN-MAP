@@ -1,4 +1,5 @@
 ﻿using IMIKN_MAP.Models;
+using IMIKN_MAP.Controls;
 using IMIKN_MAP.Views;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace IMIKN_MAP.ViewModels
 {
     class MapViewModel : BaseViewModel
     {
+        public static MapViewModel Current;
+
         public MapViewModel()
         {
             StopCompassCommand = new Command(StopCompass);
@@ -19,9 +22,12 @@ namespace IMIKN_MAP.ViewModels
             ScaleUpCommand = new Command(ScaleUp);
             ScaleDownCommand = new Command(ScaleDown);
             ChoosePathCommand = new Command(ChoosePath);
+            ChangeFloorCommand = new Command<SvgImage>(ChangeFloor);
             Text = 0;
             ScaleValue = 0;
-            Target = new double[3];
+            CurrentFloor = 1;
+            floorIcon = new string[4] { "1_floor_glow", "2_floor", "3_floor", "4_floor" };
+            Current = this;
         }
 
         public Command OpenFlyoutCommand { get; }
@@ -30,16 +36,22 @@ namespace IMIKN_MAP.ViewModels
         public Command StartCompassCommand { get; }
         public Command ScaleUpCommand { get; }
         public Command ScaleDownCommand { get; }
+        public Command<SvgImage> ChangeFloorCommand { get; }
 
-        private Dot[] navigationDots;
-        private double[] target;
+        private string[] pathIds;
         private double text;
         private double scaleValue;
+        private string[] floorIcon;
+        private int currentFloor;
 
         public double Text { get => text; set => SetProperty(ref text, value); }
         public double ScaleValue { get => scaleValue; set => SetProperty(ref scaleValue, value); }
-        public Dot[] NavigationDots { get => navigationDots; set => SetProperty(ref navigationDots, value); }
-        public double[] Target { get => target; set => SetProperty(ref target, value); }
+        public string[] PathIds { get => pathIds; set => SetProperty(ref pathIds, value); }
+        public string FloorIcon1 { get => floorIcon[0]; set => SetProperty(ref floorIcon[0], value); }
+        public string FloorIcon2 { get => floorIcon[1]; set => SetProperty(ref floorIcon[1], value); }
+        public string FloorIcon3 { get => floorIcon[2]; set => SetProperty(ref floorIcon[2], value); }
+        public string FloorIcon4 { get => floorIcon[3]; set => SetProperty(ref floorIcon[3], value); }
+        public int CurrentFloor { get => currentFloor; set => SetProperty(ref currentFloor, value); }
 
         private void StopCompass()
         {
@@ -67,6 +79,18 @@ namespace IMIKN_MAP.ViewModels
         private async void ChoosePath()
         {
             await Shell.Current.GoToAsync(nameof(PathSelectionPage));
+        }
+        private void ChangeFloor(SvgImage image)
+        {
+            if (FloorIcon1.Contains("glow")) FloorIcon1 = "1_floor";
+            if (FloorIcon2.Contains("glow")) FloorIcon2 = "2_floor";
+            if (FloorIcon3.Contains("glow")) FloorIcon3 = "3_floor";
+            if (FloorIcon4.Contains("glow")) FloorIcon4 = "4_floor";
+            if (!image.Source.Contains("glow")) image.Source += "_glow";
+            if (FloorIcon1.Contains("glow") && FloorIcon1[0] == '1') CurrentFloor = 1;
+            if (FloorIcon2.Contains("glow") && FloorIcon2[0] == '2') CurrentFloor = 2;
+            if (FloorIcon3.Contains("glow") && FloorIcon3[0] == '3') CurrentFloor = 3;
+            if (FloorIcon4.Contains("glow") && FloorIcon4[0] == '4') CurrentFloor = 4;
         }
 
         private void ScaleUp()

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 900 700" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:bevel;stroke-miterlimit:10;">
+    <g id="_x34__этаж">
+        <g id="Вне_этажа">
+            <path d="M853,103.3L853,392.1L875.4,392.1L875.4,440.7L851.1,440.7L851.1,619.6L729.5,619.6L729.5,522.3L557.4,522.3L557.4,498L516.6,498L516.6,689.6L274.5,689.6L274.5,536L144.2,536L144.2,453.3L397,453.3L397,234.5L356.2,234.5L356.2,170.4L476.7,170.4L476.7,370.7L522.4,370.7L522.4,343.4L729.5,343.4L729.5,10L852,10L877.3,38.1L877.3,103.3L853,103.3Z" style="fill:rgb(241,243,244);fill-rule:nonzero;stroke:black;stroke-width:0.25px;"/>
+        </g>
+        <g id="Коридор">
+            <path d="M582.1,112L582.1,134.8L436.4,134.8L436.4,170.4L397,170.4L397,135.4L352.8,135.2L352.8,134.8L221.6,134.8L221.6,170.4L176.3,170.4L176.3,134.8L108.2,134.8L108.2,170.4L144.2,170.4L144.2,191L108.2,191L108.2,418.6L144.2,418.6L144.2,477L109.4,477L109.4,521.1L144.2,521.1L144.2,536L81,536L81,112L582.1,112Z" style="fill:rgb(205,233,237);fill-rule:nonzero;stroke:black;stroke-width:0.5px;"/>
+        </g>
+        <g id="Туалеты">
+            <path d="M113.8,545.6L113.8,580.7L81,580.7L81,536L105.3,536L105.3,545.6L113.8,545.6Z" style="fill:rgb(88,91,165);fill-rule:nonzero;stroke:black;stroke-width:0.5px;"/>
+            <path d="M144.2,536L144.2,580.7L113.8,580.7L113.8,545.6L122.4,545.6L122.4,536L144.2,536Z" style="fill:rgb(238,103,92);fill-rule:nonzero;stroke:black;stroke-width:0.5px;"/>
+            <rect x="105.3" y="536" width="17.1" height="9.6" style="fill:rgb(241,243,244);stroke:black;stroke-width:0.5px;"/>
+        </g>
+        <g id="Лестницы">
+            <rect x="352.8" y="135.4" width="44.2" height="35" style="fill:rgb(121,134,203);stroke:black;stroke-width:0.5px;"/>
+            <rect x="109.4" y="477" width="34.8" height="44.1" style="fill:rgb(121,134,203);stroke:black;stroke-width:0.5px;"/>
+        </g>
+        <g id="Аудитории">
+            <rect x="621.3" y="112" width="108.3" height="58.3" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="483.7" y="134.8" width="48" height="35.5" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="531.7" y="134.8" width="50.5" height="35.5" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="108.2" y="373.2" width="36" height="45.4" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="108.2" y="134.8" width="68" height="35.5" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="221.6" y="134.8" width="48.9" height="35.5" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="270.5" y="134.8" width="82.2" height="35.5" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="108.2" y="327.9" width="36" height="45.4" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="108.2" y="281.9" width="36" height="46" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="108.2" y="191" width="36" height="90.9" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="653.4" y="49.8" width="76.1" height="62.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="582.1" y="49.8" width="71.2" height="62.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="504.8" y="49.8" width="77.3" height="62.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="411.9" y="49.8" width="93" height="62.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="316.6" y="49.8" width="95.2" height="62.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="247.1" y="49.8" width="69.5" height="62.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="174.4" y="49.8" width="72.7" height="62.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="81" y="49.8" width="93.4" height="62.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="22.7" y="49.8" width="58.3" height="120.6" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="22.7" y="170.4" width="58.3" height="87.2" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="22.7" y="257.6" width="58.3" height="137.8" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="22.7" y="395.3" width="58.3" height="114.8" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="22.7" y="510.2" width="58.3" height="70.5" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="436.4" y="134.8" width="47.2" height="35.5" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <rect x="582.1" y="112" width="39.1" height="58.3" style="fill:rgb(255,251,240);stroke:black;stroke-width:0.5px;"/>
+            <path d="M108.2,236.4L144.2,236.4" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:0.5px;"/>
+        </g>
+        <g id="Двери">
+            <rect x="80.3" y="518.7" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="80.3" y="405.5" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="107.5" y="405.5" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="107.5" y="361.3" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="80.3" y="337.1" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="107.5" y="315.2" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="80.3" y="262.3" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="80.3" y="246.9" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="107.5" y="254.1" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="107.5" y="210.5" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <rect x="80.3" y="158.8" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,275.98,-51.8999)">
+                <rect x="163.2" y="108.6" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,254.806,15.9341)">
+                <rect x="118.7" y="131.9" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,343.665,-119.585)">
+                <rect x="230.9" y="108.6" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,394.969,-125.289)">
+                <rect x="259.4" y="131.4" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,391.175,-167.095)">
+                <rect x="278.4" y="108.6" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,434.568,-164.888)">
+                <rect x="299" y="131.4" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,489.901,-265.821)">
+                <rect x="377.1" y="108.6" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,583.758,-359.678)">
+                <rect x="471" y="108.6" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <rect x="435.7" y="148" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,634.468,-410.388)">
+                <rect x="521.7" y="108.6" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,627.788,-358.108)">
+                <rect x="492.2" y="131.4" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,673.142,-403.462)">
+                <rect x="537.6" y="131.4" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1.83697e-16,1,-1,-1.83697e-16,720.604,-496.524)">
+                <rect x="607.8" y="108.6" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <g transform="matrix(-1,-1.22465e-16,1.22465e-16,-1,1242.52,249.276)">
+                <rect x="620.5" y="121.2" width="1.5" height="6.9" style="fill:rgb(245,240,160);stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            </g>
+            <path d="M582.1,120C582.5,120 582.8,120.3 582.8,120.7L582.8,126.1C582.8,126.5 582.5,126.8 582.1,126.8C581.7,126.8 581.4,126.5 581.4,126.1L581.4,120.7C581.4,120.3 581.7,120 582.1,120Z" style="fill:rgb(109,195,190);fill-rule:nonzero;stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <path d="M653.4,80C653.8,80 654.1,80.3 654.1,80.7L654.1,86.1C654.1,86.5 653.8,86.8 653.4,86.8C653,86.8 652.7,86.5 652.7,86.1L652.7,80.7C652.7,80.4 653,80 653.4,80Z" style="fill:rgb(109,195,190);fill-rule:nonzero;stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <path d="M397,156C396.6,156 396.3,155.7 396.3,155.3L396.3,149.9C396.3,149.5 396.6,149.2 397,149.2C397.4,149.2 397.7,149.5 397.7,149.9L397.7,155.3C397.7,155.7 397.4,156 397,156Z" style="fill:rgb(114,182,43);fill-rule:nonzero;stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <path d="M130.2,477C130.2,477.4 129.9,477.7 129.5,477.7L124.1,477.7C123.7,477.7 123.4,477.4 123.4,477C123.4,476.6 123.7,476.3 124.1,476.3L129.5,476.3C129.9,476.2 130.2,476.6 130.2,477Z" style="fill:rgb(114,182,43);fill-rule:nonzero;stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <path d="M96.6,536C96.6,536.4 96.3,536.7 95.9,536.7L90.5,536.7C90.1,536.7 89.8,536.4 89.8,536C89.8,535.6 90.1,535.3 90.5,535.3L95.9,535.3C96.2,535.2 96.6,535.5 96.6,536Z" style="fill:rgb(210,145,191);fill-rule:nonzero;stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+            <path d="M136.7,536C136.7,536.4 136.4,536.7 136,536.7L130.6,536.7C130.2,536.7 129.9,536.4 129.9,536C129.9,535.6 130.2,535.3 130.6,535.3L136,535.3C136.4,535.2 136.7,535.5 136.7,536Z" style="fill:rgb(210,145,191);fill-rule:nonzero;stroke:black;stroke-width:0.25px;stroke-linejoin:round;"/>
+        </g>
+    </g>
+</svg>

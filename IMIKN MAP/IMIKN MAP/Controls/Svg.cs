@@ -17,7 +17,7 @@ namespace IMIKN_MAP.Controls
         private SKPicture _svgPicture;
 
         public static readonly BindableProperty SourceProperty = BindableProperty.Create(
-            nameof(Source), typeof(string), typeof(SvgImage), default(string), propertyChanged: SourceCanvas);
+            nameof(Source), typeof(string), typeof(SvgImage), default(string), propertyChanged: SourceChanged);
 
         public string Source
         {
@@ -34,7 +34,7 @@ namespace IMIKN_MAP.Controls
             _canvasView.PaintSurface += CanvasViewOnPaintSurface;
         }
 
-        private static void SourceCanvas(BindableObject bindable, object oldvalue, object newvalue)
+        private static void SourceChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             SvgImage svgSvgImage = bindable as SvgImage;
             svgSvgImage?.LoadSvgPicture();
@@ -43,7 +43,7 @@ namespace IMIKN_MAP.Controls
 
         private void LoadSvgPicture()
         {
-            using (Stream stream = GetType().Assembly.GetManifestResourceStream("IMIKN_MAP.Resources." + Source))
+            using (Stream stream = GetType().Assembly.GetManifestResourceStream("IMIKN_MAP.Resources." + Source + ".svg"))
             {
                 SKSvg svg = new SKSvg();
                 svg.Load(stream);

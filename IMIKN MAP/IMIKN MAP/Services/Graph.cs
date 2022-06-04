@@ -1,4 +1,5 @@
 ﻿using IMIKN_MAP.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,30 +9,23 @@ namespace IMIKN_MAP.Services
     class Graph
     {
         public Dot[] graph { get; set; }
-        public Graph(string[] temp)
+        public Graph(string temp)
         {
             List<Dot> allDots = new List<Dot>();
-            for (int i = 0; i < temp.Length; i += 4)
-            {
-                //allDots.Add(new Dot(temp[i], float.Parse(temp[i + 1]), float.Parse(temp[i + 2]), temp[i + 3].Split(',')));
-            }
+            var events = JArray.Parse(temp);
+            foreach (var item in events)
+                allDots.Add(new Dot((string)item["Id"], (double)item["X"], (double)item["Y"], (int)item["Floor"], item["LinkedPoints"].ToObject<string[]>(), (bool)item["IsStairs"]));
             graph = new Dot[allDots.Count];
             allDots.CopyTo(graph);
             for (int i = 0; i < graph.Length - 1; i++)
-            {
                 for (int k = i + 1; k < graph.Length; k++)
-                {
                     foreach (var a in graph[i].LinkedId)
-                    {
                         if (a == graph[k].Id)
                         {
                             graph[i].LinkedDots.Add(graph[k]);
                             graph[k].LinkedDots.Add(graph[i]);
                             break;
                         }
-                    }
-                }
-            }
         }
         public Dot[] GetPath(string from, string to)
         {

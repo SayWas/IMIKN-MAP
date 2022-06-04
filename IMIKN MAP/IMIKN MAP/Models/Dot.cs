@@ -6,14 +6,15 @@ namespace IMIKN_MAP.Models
 {
     class Dot
     {
-        public Dot(string id, double x, double y, int floor, string[] linkedId, bool isStairs = false)
+        public Dot(string id, double x, double y, int floor, string[] linkedId, bool isStairs = false, List<Dot> linkedDots = null)
         {
             this.Id = id;
             this.X = x;
             this.Y = y;
             this.Floor = floor;
             this.LinkedId = linkedId;
-            IsStairs = isStairs != false ? true : false;
+            this.LinkedDots = linkedDots != null ? linkedDots : new List<Dot>();
+            this.IsStairs = isStairs != false ? true : false;
         }
 
         public string Id { get; set; }

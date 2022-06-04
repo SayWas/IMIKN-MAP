@@ -16,23 +16,46 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
-        <controls:Map Source="Map" Floors="1" ScaleValue="{Binding ScaleValue}" PathPoints="{Binding NavigationDots}" Target="{Binding Target}" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+        <controls:Map Source="Map" Floors="4" ScaleValue="{Binding ScaleValue}" PathIds="{Binding PathIds}" CurrentFloor="{Binding CurrentFloor, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Fill"/>
 
-        <controls:SvgImage Source="threeline.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Start" Margin="7, 7">
+        <controls:SvgImage Source="threeline" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Start" Margin="7, 7">
             <controls:SvgImage.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding OpenFlyoutCommand}"/>
             </controls:SvgImage.GestureRecognizers>
         </controls:SvgImage>
-        
+
+        <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand" Orientation="Horizontal" Margin="0, 7" WidthRequest="230">
+            <controls:SvgImage x:Name="Floor1" Source="{Binding FloorIcon1, Mode=TwoWay}" WidthRequest="45" HeightRequest="45" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <controls:SvgImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeFloorCommand}" CommandParameter="{x:Reference Floor1}"/>
+                </controls:SvgImage.GestureRecognizers>
+            </controls:SvgImage>
+            <controls:SvgImage x:Name="Floor2" Source="{Binding FloorIcon2, Mode=TwoWay}" WidthRequest="45" HeightRequest="45" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <controls:SvgImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeFloorCommand}" CommandParameter="{x:Reference Floor2}"/>
+                </controls:SvgImage.GestureRecognizers>
+            </controls:SvgImage>
+            <controls:SvgImage x:Name="Floor3" Source="{Binding FloorIcon3, Mode=TwoWay}" WidthRequest="45" HeightRequest="45" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <controls:SvgImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeFloorCommand}" CommandParameter="{x:Reference Floor3}"/>
+                </controls:SvgImage.GestureRecognizers>
+            </controls:SvgImage>
+            <controls:SvgImage x:Name="Floor4" Source="{Binding FloorIcon4, Mode=TwoWay}" WidthRequest="45" HeightRequest="45" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <controls:SvgImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeFloorCommand}" CommandParameter="{x:Reference Floor4}"/>
+                </controls:SvgImage.GestureRecognizers>
+            </controls:SvgImage>
+        </StackLayout>
+
         <StackLayout HorizontalOptions="End" VerticalOptions="Start" Orientation="Vertical" Margin="0, 150, 10, 0">
             
-            <controls:SvgImage Source="plus.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Margin="0, 5">
+            <controls:SvgImage Source="plus" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Margin="0, 5">
                 <controls:SvgImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ScaleUpCommand}"/>
                 </controls:SvgImage.GestureRecognizers>
             </controls:SvgImage>
             
-            <controls:SvgImage Source="minus.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center">
+            <controls:SvgImage Source="minus" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center">
                 <controls:SvgImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ScaleDownCommand}"/>
                 </controls:SvgImage.GestureRecognizers>
@@ -40,7 +63,7 @@
             
         </StackLayout>
 
-        <controls:SvgImage Source="threeline.svg" WidthRequest="50" HeightRequest="50" HorizontalOptions="End" VerticalOptions="End" Margin="7, 7">
+        <controls:SvgImage Source="threeline" WidthRequest="50" HeightRequest="50" HorizontalOptions="End" VerticalOptions="End" Margin="7, 7">
             <controls:SvgImage.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding ChoosePathCommand}"/>
             </controls:SvgImage.GestureRecognizers>

@@ -2,6 +2,7 @@
 using IMIKN_MAP.Views;
 using System;
 using System.Net;
+using System.Net.Security;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,16 +21,20 @@ namespace IMIKN_MAP
 
         protected override void OnStart()
         {
-            /*try
+            try
             {
-                string serverDataVersion = new WebClient().DownloadString("где хранится dataversion");
-                object dataVersion;
-                if (App.Current.Properties.TryGetValue("data_version", out dataVersion) && (string)dataVersion != serverDataVersion)
+                object dots;
+                if (!App.Current.Properties.TryGetValue("Dots", out dots))
                 {
-
-                    // Действия по обновлению данных
-
-                    dataVersion = serverDataVersion;
+                    var uri = new UriBuilder("https://0x0.st/oMHx.json").Uri;
+                    var client = new WebClient();
+                    ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
+                    var content = client.DownloadString(uri);
+                    App.Current.Properties.Add("Dots", content);
+                    var uri1 = new UriBuilder("https://0x0.st/oMH6.json").Uri;
+                    var client1 = new WebClient();
+                    var content1 = client.DownloadString(uri1);
+                    App.Current.Properties.Add("RawDots", content1);
                 }
             }
             catch (WebException wbex)
@@ -39,7 +44,7 @@ namespace IMIKN_MAP
             catch (Exception)
             {
 
-            }*/
+            }
         }
 
         protected override void OnSleep()

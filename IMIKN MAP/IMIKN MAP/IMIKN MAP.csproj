@@ -18,6 +18,10 @@
     <None Remove="Resources\b.svg" />
     <None Remove="Resources\Center.svg" />
     <None Remove="Resources\Map\Floor1 - Копировать.svg" />
+    <None Remove="Resources\Map\Floor1.svg" />
+    <None Remove="Resources\Map\Floor2.svg" />
+    <None Remove="Resources\Map\Floor3.svg" />
+    <None Remove="Resources\Map\Floor4.svg" />
     <None Remove="Resources\Me.svg" />
     <None Remove="Resources\minus.svg" />
     <None Remove="Resources\plus.svg" />
@@ -36,11 +40,14 @@
     <EmbeddedResource Include="Resources\a.svg" />
     <EmbeddedResource Include="Resources\b.svg" />
     <EmbeddedResource Include="Resources\Center.svg" />
+    <EmbeddedResource Include="Resources\Map\Floor1.svg" />
+    <EmbeddedResource Include="Resources\Map\Floor2.svg" />
+    <EmbeddedResource Include="Resources\Map\Floor3.svg" />
+    <EmbeddedResource Include="Resources\Map\Floor4.svg" />
     <EmbeddedResource Include="Resources\minus.svg" />
     <EmbeddedResource Include="Resources\plus.svg" />
     <EmbeddedResource Include="Resources\test.svg" />
     <EmbeddedResource Include="Resources\Me.svg" />
-    <EmbeddedResource Include="Resources\Map\Floor1.svg" />
     <EmbeddedResource Include="Resources\threeline.svg" />
   </ItemGroup>
 
