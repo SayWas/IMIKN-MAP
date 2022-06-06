@@ -24,6 +24,7 @@ namespace IMIKN_MAP.Controls
         private SKPicture[] _svgPictures;
         private List<List<SKPoint[]>> pathpoints;
 
+        #region BindableProterties
         public static readonly BindableProperty SourceProperty = BindableProperty.Create(
             nameof(Source), typeof(string), typeof(SvgImage), default(string), propertyChanged: SourceChanged);
         public static readonly BindableProperty FloorsProperty = BindableProperty.Create(
@@ -33,7 +34,17 @@ namespace IMIKN_MAP.Controls
         public static readonly BindableProperty PathIdsProperty = BindableProperty.Create(
             nameof(PathIds), typeof(string[]), typeof(Map), null, propertyChanged: PathIdsChanged);
         public static readonly BindableProperty CurrentFloorProperty = BindableProperty.Create(
-            nameof(CurrentFloor), typeof(int), typeof(Map), null, propertyChanged: CurrentFloorChanged);
+            nameof(CurrentFloor), typeof(int), typeof(Map), default(int), propertyChanged: CurrentFloorChanged);
+        public static readonly BindableProperty OffsetXProperty = BindableProperty.Create(
+            nameof(OffsetX), typeof(double), typeof(Map), default(double));
+        public static readonly BindableProperty OffsetYProperty = BindableProperty.Create(
+            nameof(OffsetY), typeof(double), typeof(Map), default(double));
+        public static readonly BindableProperty OriginScaleProperty = BindableProperty.Create(
+            nameof(OriginScale), typeof(double), typeof(Map), default(double));
+        public static readonly BindableProperty CurrentScaleProperty = BindableProperty.Create(
+            nameof(CurrentScale), typeof(double), typeof(Map), default(double));
+        public static readonly BindableProperty OriginYOffsetProperty = BindableProperty.Create(
+            nameof(OriginYOffset), typeof(double), typeof(Map), default(double));
 
         public string Source
         {
@@ -60,6 +71,31 @@ namespace IMIKN_MAP.Controls
             get => (string[])GetValue(PathIdsProperty);
             set => SetValue(PathIdsProperty, value);
         }
+        public double OffsetX {
+            get => (double)GetValue(OffsetXProperty);
+            set => SetValue(OffsetXProperty, value);
+        }
+        public double OffsetY
+        {
+            get => (double)GetValue(OffsetYProperty);
+            set => SetValue(OffsetYProperty, value);
+        }
+        public double OriginScale
+        {
+            get => (double)GetValue(OriginScaleProperty);
+            set => SetValue(OriginScaleProperty, value);
+        }
+        public double CurrentScale
+        {
+            get => (double)GetValue(CurrentScaleProperty);
+            set => SetValue(CurrentScaleProperty, value);
+        }
+        public double OriginYOffset
+        {
+            get => (double)GetValue(OriginYOffsetProperty);
+            set => SetValue(OriginYOffsetProperty, value);
+        }
+        #endregion
 
         public Map()
         {
@@ -110,19 +146,28 @@ namespace IMIKN_MAP.Controls
             map.OnPinchUpdated(map, new PinchGestureUpdatedEventArgs(GestureStatus.Completed, (double)newValue, new Point(0.5, 0.5)));
             map.gestureParameters.WasScaled = false;
         }
-        private static void PathIdsChanged(BindableObject bindable, object oldValue, object newValue)
+        private async static void PathIdsChanged(BindableObject bindable, object oldValue, object newValue)
         {
             Map map = bindable as Map;
             foreach (var item in map.pathpoints)
                 item.Clear();
-            map.graph = new Graph((string)App.Current.Properties["Dots"]);
-            Dot[] path = map.graph.GetPath(map.PathIds[0], map.PathIds[1]);
+            if (map.graph == null)
+                map.graph = new Graph((string)App.Current.Properties["Dots"]);
+            try
+            {
+                if (map.PathIds[0] == "Мое местоположение")
+                {
+                    double[] location = await LocationTools.GetCurrentLocation();
+                    map.graph.AddDot((float)location[0], (float)location[1], map.CurrentFloor);
+                }
+            }
+            catch { return; }
+                Dot[] path = map.graph.GetPath(map.PathIds[0], map.PathIds[1]);
             int i = 1, j = 0;
             for (; i < path.Length; i++)
             {
                 while (path[i].Floor == path[i - 1].Floor && i < path.Length - 1)
                     i++;
-
                 if (i == path.Length - 1) i++;
 
                 SKPoint[] points = new SKPoint[i - j];
@@ -130,10 +175,13 @@ namespace IMIKN_MAP.Controls
                 {
                     points[q] = new SKPoint((float)path[j + q].X, (float)path[j + q].Y);
                 }
-                map.pathpoints[path[i - 1].Floor - 1].Add(points);
+                if (points.Length != 1)
+                    map.pathpoints[path[i - 1].Floor - 1].Add(points);
                 j = i;
+                map.CurrentFloor = path[path.Length - 1].Floor;
+                map.ScaleValue = 0.0000001;
+                map.ScaleValue = 0;
             }
-            //map?._canvasView.InvalidateSurface();
         }
         private static void CurrentFloorChanged(BindableObject bindable, object oldValue, object newValue)
         {
@@ -168,6 +216,11 @@ namespace IMIKN_MAP.Controls
             SKRect bounds = _svgPictures[CurrentFloor - 1].CullRect;
             float ratio = info.Height - bounds.Height < info.Width - bounds.Width ? info.Height / bounds.Height : info.Width / bounds.Width;
             canvas.Scale(ratio);
+            if (OriginScale == 0 || OriginYOffset == 0)
+            {
+                OriginScale = ratio;
+                OriginYOffset = (info.Height / 2f) - bounds.MidY;
+            }
 
             canvas.Translate(-bounds.MidX + (float)gestureParameters.TranslationScale[0] + (float)gestureParameters.TranslationMove[0], -bounds.MidY + (float)gestureParameters.TranslationScale[1] + (float)gestureParameters.TranslationMove[1]);
             canvas.Scale((float)gestureParameters.Scale);
@@ -175,20 +228,30 @@ namespace IMIKN_MAP.Controls
             canvas.DrawPicture(_svgPictures[CurrentFloor - 1]);
 
             if (pathpoints[CurrentFloor - 1].Count != 0)
+            {
                 foreach (var path in pathpoints[CurrentFloor - 1])
+                {
                     canvas.DrawPoints(SKPointMode.Polygon, path, new SKPaint
                     {
                         Style = SKPaintStyle.Stroke,
                         Color = SKColors.Orange,
-                        StrokeWidth = 3
+                        StrokeWidth = 3,
+                        StrokeCap = SKStrokeCap.Round
                     });
-            /*if (Target != null && CurrentFloor == Target[2])
-                canvas.DrawCircle((float)Target[0], (float)Target[1], 15, new SKPaint
-                {
-                    Style = SKPaintStyle.Stroke,
-                    Color = SKColors.Red,
-                    StrokeWidth = 50
-                });*/
+                    canvas.DrawCircle(path[0].X, path[0].Y, 4, new SKPaint
+                    {
+                        Style = SKPaintStyle.Fill,
+                        Color = SKColors.Blue,
+                        StrokeWidth = 1
+                    });
+                    canvas.DrawCircle(path[path.Length-1].X, path[path.Length - 1].Y, 5, new SKPaint
+                        {
+                            Style = SKPaintStyle.Fill,
+                            Color = SKColors.Red,
+                            StrokeWidth = 1
+                        });
+                }
+            }
         }
 
         private void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
@@ -221,6 +284,9 @@ namespace IMIKN_MAP.Controls
 
                     gestureParameters.TranslationScale[0] = targetX.Clamp(-gestureParameters.Size[0] * (gestureParameters.CurrentScale - 1), 0);
                     gestureParameters.TranslationScale[1] = targetY.Clamp(-gestureParameters.Size[1] * (gestureParameters.CurrentScale - 1), 0);
+                    OffsetX = gestureParameters.TranslationScale[0];
+                    OffsetY = gestureParameters.TranslationScale[1];
+                    CurrentScale = gestureParameters.CurrentScale;
 
                     gestureParameters.Scale = gestureParameters.CurrentScale;
                     _canvasView.InvalidateSurface();
@@ -243,10 +309,14 @@ namespace IMIKN_MAP.Controls
                     if (gestureParameters.WasScaled)
                         break;
                         
-                    gestureParameters.TranslationMove[0] = gestureParameters.Coordinates[0] + (e.TotalX * 2.2);
-                    gestureParameters.TranslationMove[1] = gestureParameters.Coordinates[1] + (e.TotalY * 2.2);
+                    gestureParameters.TranslationMove[0] = gestureParameters.Coordinates[0] + (e.TotalX * DeviceDisplay.MainDisplayInfo.Density);
+                    gestureParameters.TranslationMove[1] = gestureParameters.Coordinates[1] + (e.TotalY * DeviceDisplay.MainDisplayInfo.Density);
                     gestureParameters.TranslationMove[0] = gestureParameters.TranslationMove[0].Clamp(-(gestureParameters.Size[0] * gestureParameters.Scale - Math.Abs(gestureParameters.Offset[0]) - gestureParameters.Size[0]), Math.Abs(gestureParameters.Offset[0]));
                     gestureParameters.TranslationMove[1] = gestureParameters.TranslationMove[1].Clamp(-(gestureParameters.Size[1] * gestureParameters.Scale - Math.Abs(gestureParameters.Offset[1]) - gestureParameters.Size[1]), Math.Abs(gestureParameters.Offset[1]));
+                    OffsetX = gestureParameters.TranslationMove[0] + gestureParameters.TranslationScale[0];
+                    OffsetY = gestureParameters.TranslationMove[1] + gestureParameters.TranslationScale[1];
+                    CurrentScale += 1;
+                    CurrentScale -= 1;
                     _canvasView.InvalidateSurface();
                     break;
 

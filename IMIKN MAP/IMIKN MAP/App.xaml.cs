@@ -26,14 +26,14 @@ namespace IMIKN_MAP
                 object dots;
                 if (!App.Current.Properties.TryGetValue("Dots", out dots))
                 {
-                    var uri = new UriBuilder("https://0x0.st/oMHx.json").Uri;
-                    var client = new WebClient();
+                    var uri = new UriBuilder("https://0x0.st/oMcc.json").Uri;
                     ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
-                    var content = client.DownloadString(uri);
-                    App.Current.Properties.Add("Dots", content);
-                    var uri1 = new UriBuilder("https://0x0.st/oMH6.json").Uri;
-                    var client1 = new WebClient();
-                    var content1 = client.DownloadString(uri1);
+                    var content = new WebClient().DownloadString(uri);
+                    App.Current.Properties.Add("Dots", content); }
+                object rawdots;
+                if (!App.Current.Properties.TryGetValue("RawDots", out rawdots)) {
+                    var uri1 = new UriBuilder("https://0x0.st/oMcA.json").Uri;
+                    var content1 = new WebClient().DownloadString(uri1);
                     App.Current.Properties.Add("RawDots", content1);
                 }
             }

@@ -6,7 +6,7 @@ namespace IMIKN_MAP.Models
 {
     class Dot
     {
-        public Dot(string id, double x, double y, int floor, string[] linkedId, bool isStairs = false, List<Dot> linkedDots = null)
+        public Dot(string id, double x, double y, int floor, string[] linkedId = null, bool isStairs = false, List<Dot> linkedDots = null)
         {
             this.Id = id;
             this.X = x;

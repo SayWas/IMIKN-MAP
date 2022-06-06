@@ -16,7 +16,11 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
-        <controls:Map Source="Map" Floors="4" ScaleValue="{Binding ScaleValue}" PathIds="{Binding PathIds}" CurrentFloor="{Binding CurrentFloor, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+        <controls:Map Source="Map" Floors="4" ScaleValue="{Binding ScaleValue, Mode=TwoWay}" PathIds="{Binding PathIds}" OffsetX="{Binding Offset1, Mode=TwoWay}" 
+                      OffsetY="{Binding Offset2, Mode=TwoWay}" CurrentFloor="{Binding CurrentFloor, Mode=TwoWay}" OriginScale="{Binding OriginScale, Mode=TwoWay}"
+                      OriginYOffset="{Binding OriginYOffset, Mode=TwoWay}" CurrentScale="{Binding CurrentScale, Mode=TwoWay}"
+                      HorizontalOptions="Fill" VerticalOptions="Fill"/>
+        <controls:SvgImage Source="Me" TranslationX="{Binding LocationX}" TranslationY="{Binding LocationY}" WidthRequest="20" HeightRequest="20" HorizontalOptions="Start" VerticalOptions="Start" Rotation="{Binding RotationAngle}"/>
 
         <controls:SvgImage Source="threeline" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Start" Margin="7, 7">
             <controls:SvgImage.GestureRecognizers>
